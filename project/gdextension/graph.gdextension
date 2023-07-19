@@ -1,0 +1,8 @@
+[configuration]
+
+entry_symbol = "graph_extension_library_init"
+compatibility_minimum = 4.1
+
+[libraries]
+
+windows.debug.x86_64 = "../../bin/win64/graph_extension.dll"
