@@ -1,0 +1,66 @@
+[gd_scene load_steps=2 format=3 uid="uid://dddr7n1pj4yym"]
+
+[ext_resource type="Script" path="res://script/main_graph_edit.gd" id="1_ens6f"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="MyGraphEdit" type="GraphEditExtension" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_ens6f")
+metadata/_edit_lock_ = true
+
+[node name="Test" type="GraphNodeExtension" parent="MyGraphEdit"]
+layout_mode = 0
+offset_left = 440.0
+offset_top = 159.0
+offset_right = 516.0
+offset_bottom = 261.0
+mouse_filter = 1
+title = "Hello"
+position_offset = Vector2(440, 159)
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+slot/1/left_enabled = false
+slot/1/left_type = 0
+slot/1/left_color = Color(1, 1, 1, 1)
+slot/1/left_icon = null
+slot/1/right_enabled = false
+slot/1/right_type = 0
+slot/1/right_color = Color(1, 1, 1, 1)
+slot/1/right_icon = null
+slot/1/draw_stylebox = true
+
+[node name="Label" type="Label" parent="MyGraphEdit/Test"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="MyGraphEdit/Test"]
+layout_mode = 2
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 681.0
+offset_top = 274.0
+offset_right = 719.0
+offset_bottom = 305.0
+text = "button"
+
+[connection signal="pressed" from="Button" to="MyGraphEdit" method="_on_button_pressed"]
