@@ -70,6 +70,26 @@ Error GraphEditExtension::connect_node(const StringName& from_node, int from_por
 	}
 
 	// TODO 在这里处理连接
+	GraphNodeExtension* output_node = get_node<GraphNodeExtension>(NodePath(from_node));
+	GraphNodeExtension* input_node = get_node<GraphNodeExtension>(NodePath(to_node));
+
+	Dictionary input_ports_connected(output_node->get_input_ports_connected_with_output_port());
+	if (!input_ports_connected[from_port]) {
+		input_ports_connected[from_port] = Dictionary();
+	}
+
+	Dictionary input_nodes_connected(input_ports_connected[from_port]);
+	if (!input_nodes_connected[to_node]) {
+		input_nodes_connected[to_node] = Array();
+	}
+
+	Array input_ports_connected_on_input_node(input_nodes_connected[to_node]);
+	if (!input_ports_connected_on_input_node.has(to_port)) {
+		input_ports_connected_on_input_node.push_back(input_node->get_connection_input_slot(to_port));
+	}
+	input_ports_connected_on_input_node.sort();
+	UtilityFunctions::print(input_ports_connected);
+
 	return OK;
 }
 
@@ -77,6 +97,24 @@ void GraphEditExtension::disconnect_node(const StringName& from_node, int from_p
 	GraphEdit::disconnect_node(from_node, from_port, to_node, to_port);
 
 	// TODO 在这里断开连接
+	GraphNodeExtension* output_node = get_node<GraphNodeExtension>(NodePath(from_node));
+	GraphNodeExtension* input_node = get_node<GraphNodeExtension>(NodePath(to_node));
+	Dictionary input_ports_connected(output_node->get_input_ports_connected_with_output_port());
+	Dictionary input_nodes_connected(input_ports_connected[from_port]);
+	Array input_ports_connected_on_input_node(input_nodes_connected[to_node]);
+	int index_input_port = input_node->get_connection_input_slot(to_port);
+
+	input_ports_connected_on_input_node.erase(index_input_port);
+	if (input_ports_connected_on_input_node.is_empty()) {
+		input_nodes_connected.erase(to_node);
+	}
+	if (!input_ports_connected[from_port]) {
+		input_ports_connected.erase(from_port);
+	}
+
+	UtilityFunctions::print("input_ports_connected_on_input_node:  ", input_ports_connected_on_input_node);
+	UtilityFunctions::print("input_nodes_connected:  ", input_nodes_connected);
+	UtilityFunctions::print("input_ports_connected:  ", input_ports_connected);
 }
 
 void GraphNodeExtension::_bind_methods() {
@@ -150,6 +188,10 @@ void GraphNodeExtension::set_slot_enabled_right(int32_t slot_index, bool enable)
 	GraphNode::set_slot_enabled_right(slot_index, enable);
 
 	add_output_port(slot_index, enable);
+}
+
+Dictionary GraphNodeExtension::get_input_ports_connected_with_output_port() {
+	return input_ports_connected_with_output_port;
 }
 
 Port* GraphNodeExtension::get_input_port(int slot_index) const {

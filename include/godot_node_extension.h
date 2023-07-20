@@ -66,7 +66,8 @@ public:
 	void set_slot_enabled_left(int32_t slot_index, bool enable);
 	void set_slot_enabled_right(int32_t slot_index, bool enable);
 
-	// getter & setter
+	// setter & getter
+	Dictionary get_input_ports_connected_with_output_port();
 
 	// other
 	Port* get_input_port(int slot_index) const;
