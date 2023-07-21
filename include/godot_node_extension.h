@@ -50,11 +50,21 @@ class GraphNodeExtension : public GraphNode {
 	GDCLASS(GraphNodeExtension, GraphNode)
 protected:
 	static void _bind_methods();
+	void _notification(int p_what);
 
+
+public:
+	enum Mode {
+		DATA_SOURCE = 0,
+		DATA_PROCESSING = 1,
+		DATA_DISPLAY = 2
+	};
 
 public:
 	GraphNodeExtension();
 	~GraphNodeExtension();
+
+	void _process(double delta);
 
 	// overwrite
 	void set_slot(int32_t slot_index,
@@ -68,12 +78,26 @@ public:
 
 	// setter & getter
 	Dictionary get_input_ports_connected_with_output_port();
+	void set_mode(Mode p_mode);
+	Mode get_mode() const;
 
 	// other
 	Port* get_input_port(int slot_index) const;
 	Port* get_output_port(int slot_index) const;
 	void add_input_port(int slot_index, bool enable);
 	void add_output_port(int slot_index, bool enable);
+	void data_source();
+	template<typename T>
+	void set_data_source(Port* output_port, Variant value) {
+		Variant value_output_port = output_port->get_value();
+		value_output_port = (T)value_output_port;
+		value = (T) value;
+
+		if (value_output_port != value) {
+			output_port->set_value(value);
+		}
+	};
+
 
 	//test
 	void test_slot();
@@ -82,8 +106,11 @@ private:
 	Dictionary input_ports;
 	Dictionary output_ports;
 	Dictionary input_ports_connected_with_output_port;
+	Mode mode;
 };
 
 }// graph_extension
+
+VARIANT_ENUM_CAST(graph_extension::GraphNodeExtension::Mode)
 
 #endif //GRAPHEXTENSION_GODOT_NODE_EXTENSION_H

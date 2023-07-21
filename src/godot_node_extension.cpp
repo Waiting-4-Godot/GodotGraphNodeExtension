@@ -3,9 +3,10 @@
 //
 
 #include "godot_node_extension.h"
+#include "utils.h"
 
 #include <godot_cpp/variant/utility_functions.hpp>
-#include <utility>
+//#include <utility>
 
 
 namespace graph_extension {
@@ -88,7 +89,7 @@ Error GraphEditExtension::connect_node(const StringName& from_node, int from_por
 		input_ports_connected_on_input_node.push_back(input_node->get_connection_input_slot(to_port));
 	}
 	input_ports_connected_on_input_node.sort();
-	UtilityFunctions::print(input_ports_connected);
+//	UtilityFunctions::print(input_ports_connected);
 
 	return OK;
 }
@@ -112,18 +113,22 @@ void GraphEditExtension::disconnect_node(const StringName& from_node, int from_p
 		input_ports_connected.erase(from_port);
 	}
 
-	UtilityFunctions::print("input_ports_connected_on_input_node:  ", input_ports_connected_on_input_node);
-	UtilityFunctions::print("input_nodes_connected:  ", input_nodes_connected);
-	UtilityFunctions::print("input_ports_connected:  ", input_ports_connected);
+//	UtilityFunctions::print("input_ports_connected_on_input_node:  ", input_ports_connected_on_input_node);
+//	UtilityFunctions::print("input_nodes_connected:  ", input_nodes_connected);
+//	UtilityFunctions::print("input_ports_connected:  ", input_ports_connected);
 }
 
 void GraphNodeExtension::_bind_methods() {
+	// overwrite
 	ClassDB::bind_method(
 			D_METHOD(
 					"set_slot",
 					"slot_index", "enable_left_port", "type_left", "color_left", "enable_right_port", "type_right", "color_right", "custom_icon_left", "custom_icon_right", "draw_stylebox"
 			),
-			&GraphNodeExtension::set_slot
+			&GraphNodeExtension::set_slot,
+			DEFVAL(true), DEFVAL(Variant::INT), DEFVAL(Color(1, 1, 1, 1)),
+			DEFVAL(true), DEFVAL(Variant::INT), DEFVAL(Color(1, 1, 1, 1)),
+			DEFVAL(nullptr), DEFVAL(nullptr), DEFVAL(true)
 	);
 	ClassDB::bind_method(
 			D_METHOD("set_slot_enabled_left", "slot_index", "enable"),
@@ -134,11 +139,57 @@ void GraphNodeExtension::_bind_methods() {
 			&GraphNodeExtension::set_slot_enabled_right
 	);
 
+	// setter & getter
+	ClassDB::bind_method(D_METHOD("set_mode", "mode"), &GraphNodeExtension::set_mode);
+	ClassDB::bind_method(D_METHOD("get_mode"), &GraphNodeExtension::get_mode);
+
+	// other
+
+	// test
 	ClassDB::bind_method(D_METHOD("test_slot"), &GraphNodeExtension::test_slot);
+
+	// property
+	ClassDB::add_property(
+			"GraphNodeExtension",
+			PropertyInfo(Variant::INT, "mode",
+						 PROPERTY_HINT_ENUM, "Data Source, Data Processing, Data Display"),
+			"set_mode",
+			"get_mode"
+	);
+
+	// constant
+
+}
+
+void GraphNodeExtension::_notification(int p_what) {
+	switch ( p_what ) {
+	case NOTIFICATION_READY:
+		UtilityFunctions::print(get_name(), "ready");
+		break;
+	case NOTIFICATION_PROCESS:
+//		UtilityFunctions::print("process");
+		break;
+	case NOTIFICATION_DRAG_BEGIN:
+		UtilityFunctions::print("drag begin");
+	default:
+		break;
+	}
+}
+
+void GraphNodeExtension::_process(double delta) {
+	switch ( mode ) {
+	case DATA_SOURCE:
+		data_source();
+		break;
+	case DATA_PROCESSING:
+		break;
+	case DATA_DISPLAY:
+		break;
+	}
 }
 
 GraphNodeExtension::GraphNodeExtension() {
-
+	mode = DATA_SOURCE;
 }
 
 GraphNodeExtension::~GraphNodeExtension() {
@@ -190,10 +241,20 @@ void GraphNodeExtension::set_slot_enabled_right(int32_t slot_index, bool enable)
 	add_output_port(slot_index, enable);
 }
 
+// setter & getter
 Dictionary GraphNodeExtension::get_input_ports_connected_with_output_port() {
 	return input_ports_connected_with_output_port;
 }
 
+void GraphNodeExtension::set_mode(Mode p_mode) {
+	mode = p_mode;
+}
+
+GraphNodeExtension::Mode GraphNodeExtension::get_mode() const {
+	return mode;
+}
+
+// other
 Port* GraphNodeExtension::get_input_port(int slot_index) const {
 	return Object::cast_to<Port>(input_ports[slot_index]);
 }
@@ -230,10 +291,49 @@ void GraphNodeExtension::add_output_port(int slot_index, bool enable) {
 	}
 }
 
-void GraphNodeExtension::test_slot() {
-	UtilityFunctions::print("input_ports_size", input_ports.size());
-	UtilityFunctions::print("input_ports:  ", input_ports);
-	UtilityFunctions::print("output_ports_size", output_ports.size());
-	UtilityFunctions::print("output_ports:  ", output_ports);
+void GraphNodeExtension::data_source() {
+	int count_output_port = get_connection_output_count();
+
+	for (int index_output_port = 0; index_output_port < count_output_port; ++index_output_port) {
+//		UtilityFunctions::print(index_output_port);
+		int index_slot = get_connection_output_slot(index_output_port);
+//		UtilityFunctions::print(index_slot);
+
+		Node* child_node = get_child(index_slot);
+		Variant node_property = utils::ControlUtils::get_node_property(child_node);
+//		UtilityFunctions::print(node_property);
+		Variant::Type type_output_port = (Variant::Type)get_connection_output_type(index_output_port);
+//		UtilityFunctions::print(type_output_port);
+
+		switch ( type_output_port ) {
+		case Variant::BOOL:
+			set_data_source<bool>(get_output_port(index_slot), node_property);
+			break;
+		case Variant::INT:
+			set_data_source<int>(get_output_port(index_slot), node_property);
+			break;
+		case Variant::FLOAT:
+			set_data_source<float>(get_output_port(index_slot), node_property);
+			break;
+		case Variant::STRING:
+			set_data_source<String>(get_output_port(index_slot), node_property);
+			break;
+		default:
+			break;
+		}
+
+		UtilityFunctions::print(get_output_port(index_slot)->get_value());
+	}
 }
+
+// test
+void GraphNodeExtension::test_slot() {
+//	UtilityFunctions::print("input_ports_size", input_ports.size());
+//	UtilityFunctions::print("input_ports:  ", input_ports);
+//	UtilityFunctions::print("output_ports_size", output_ports.size());
+//	UtilityFunctions::print("output_ports:  ", output_ports);
+	data_source();
+}
+
+
 }//graph_extension

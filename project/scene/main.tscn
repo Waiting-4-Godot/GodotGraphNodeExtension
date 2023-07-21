@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://dddr7n1pj4yym"]
+[gd_scene load_steps=3 format=3 uid="uid://dddr7n1pj4yym"]
 
 [ext_resource type="Script" path="res://script/main_graph_edit.gd" id="1_ens6f"]
+[ext_resource type="PackedScene" uid="uid://cc13mcx3yo18c" path="res://scene/add.tscn" id="2_g1lbn"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -24,13 +25,13 @@ metadata/_edit_lock_ = true
 
 [node name="Test" type="GraphNodeExtension" parent="MyGraphEdit"]
 layout_mode = 0
-offset_left = 440.0
-offset_top = 159.0
-offset_right = 516.0
-offset_bottom = 261.0
+offset_left = 479.0
+offset_top = 169.0
+offset_right = 555.0
+offset_bottom = 361.0
 mouse_filter = 1
 title = "Hello"
-position_offset = Vector2(440, 159)
+position_offset = Vector2(479, 169)
 slot/0/left_enabled = false
 slot/0/left_type = 0
 slot/0/left_color = Color(1, 1, 1, 1)
@@ -49,22 +50,63 @@ slot/1/right_type = 0
 slot/1/right_color = Color(1, 1, 1, 1)
 slot/1/right_icon = null
 slot/1/draw_stylebox = true
+slot/2/left_enabled = false
+slot/2/left_type = 0
+slot/2/left_color = Color(1, 1, 1, 1)
+slot/2/left_icon = null
+slot/2/right_enabled = false
+slot/2/right_type = 0
+slot/2/right_color = Color(1, 1, 1, 1)
+slot/2/right_icon = null
+slot/2/draw_stylebox = true
+slot/3/left_enabled = false
+slot/3/left_type = 0
+slot/3/left_color = Color(1, 1, 1, 1)
+slot/3/left_icon = null
+slot/3/right_enabled = false
+slot/3/right_type = 0
+slot/3/right_color = Color(1, 1, 1, 1)
+slot/3/right_icon = null
+slot/3/draw_stylebox = true
+slot/4/left_enabled = false
+slot/4/left_type = 0
+slot/4/left_color = Color(1, 1, 1, 1)
+slot/4/left_icon = null
+slot/4/right_enabled = false
+slot/4/right_type = 0
+slot/4/right_color = Color(1, 1, 1, 1)
+slot/4/right_icon = null
+slot/4/draw_stylebox = true
 
 [node name="Label" type="Label" parent="MyGraphEdit/Test"]
 layout_mode = 2
+text = "0"
 
 [node name="Label2" type="Label" parent="MyGraphEdit/Test"]
 layout_mode = 2
+text = "1"
+
+[node name="Label3" type="Label" parent="MyGraphEdit/Test"]
+layout_mode = 2
+text = "2"
+
+[node name="Label4" type="Label" parent="MyGraphEdit/Test"]
+layout_mode = 2
+text = "3"
+
+[node name="Label5" type="Label" parent="MyGraphEdit/Test"]
+layout_mode = 2
+text = "4"
 
 [node name="GraphNode" type="GraphNodeExtension" parent="MyGraphEdit"]
 layout_mode = 0
-offset_left = 680.0
-offset_top = 284.0
-offset_right = 766.0
-offset_bottom = 386.0
+offset_left = 803.0
+offset_top = 299.0
+offset_right = 893.0
+offset_bottom = 407.0
 mouse_filter = 1
-title = "Howty"
-position_offset = Vector2(680, 284)
+title = "Howdy"
+position_offset = Vector2(803, 299)
 slot/0/left_enabled = false
 slot/0/left_type = 0
 slot/0/left_color = Color(1, 1, 1, 1)
@@ -86,19 +128,21 @@ slot/1/draw_stylebox = true
 
 [node name="Label" type="Label" parent="MyGraphEdit/GraphNode"]
 layout_mode = 2
+text = "123"
 
 [node name="Label2" type="Label" parent="MyGraphEdit/GraphNode"]
 layout_mode = 2
+text = "123"
 
 [node name="GraphNode2" type="GraphNodeExtension" parent="MyGraphEdit"]
-layout_mode = 0
-offset_left = 677.0
-offset_top = 103.0
-offset_right = 755.0
-offset_bottom = 205.0
+layout_mode = 2
+offset_left = 811.0
+offset_top = 86.0
+offset_right = 889.0
+offset_bottom = 194.0
 mouse_filter = 1
 title = "Ta-Ta"
-position_offset = Vector2(677, 103)
+position_offset = Vector2(811, 86)
 slot/0/left_enabled = false
 slot/0/left_type = 0
 slot/0/left_color = Color(1, 1, 1, 1)
@@ -120,16 +164,27 @@ slot/1/draw_stylebox = true
 
 [node name="Label" type="Label" parent="MyGraphEdit/GraphNode2"]
 layout_mode = 2
+text = "123"
 
 [node name="Label2" type="Label" parent="MyGraphEdit/GraphNode2"]
 layout_mode = 2
+text = "123"
+
+[node name="Add" parent="MyGraphEdit" instance=ExtResource("2_g1lbn")]
+layout_mode = 0
+offset_left = 639.0
+offset_top = 194.0
+offset_right = 742.0
+offset_bottom = 312.0
+mouse_filter = 1
+position_offset = Vector2(639, 194)
 
 [node name="Button" type="Button" parent="."]
 layout_mode = 0
-offset_left = 828.0
-offset_top = 413.0
-offset_right = 889.0
-offset_bottom = 444.0
+offset_left = 814.0
+offset_top = 432.0
+offset_right = 875.0
+offset_bottom = 463.0
 text = "button"
 
 [connection signal="connection_request" from="MyGraphEdit" to="MyGraphEdit" method="_on_connection_request"]
