@@ -21,6 +21,7 @@ void initialize_graph_extension_module(ModuleInitializationLevel p_level) {
 		return;
 	}
 
+	ClassDB::register_class<Test>();
 	ClassDB::register_class<graph_extension::Port>();
 	ClassDB::register_class<graph_extension::GraphEditExtension>();
 	ClassDB::register_class<graph_extension::GraphNodeExtension>();

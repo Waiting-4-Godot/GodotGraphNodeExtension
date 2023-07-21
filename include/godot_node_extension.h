@@ -97,6 +97,9 @@ public:
 			output_port->set_value(value);
 		}
 	};
+	void send_value(int index_output_port);
+	void data_display();
+	void what_should_i_do();
 
 
 	//test

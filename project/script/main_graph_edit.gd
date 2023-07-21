@@ -21,21 +21,19 @@ func init_slot() -> void:
 	test.set_slot(1, false, TYPE_INT, Color.ANTIQUE_WHITE, true, TYPE_INT, Color.AQUA)
 	test.set_slot(3)
 	test.set_slot(4)
-	graph_node.set_slot(0, true, TYPE_INT, Color.BURLYWOOD, true, TYPE_INT, Color.YELLOW_GREEN, null, null, true)
-	graph_node.set_slot(1, true, TYPE_INT, Color.BURLYWOOD, true, TYPE_INT, Color.YELLOW_GREEN, null, null, true)
-	graph_node2.set_slot(0, true, TYPE_INT, Color.YELLOW, true, TYPE_INT, Color.CORAL, null, null, true)
-	graph_node2.set_slot(1, true, TYPE_INT, Color.YELLOW, true, TYPE_INT, Color.CORAL, null, null, true)
-	
+	graph_node.set_slot(0, false, TYPE_INT, Color.BURLYWOOD, false, TYPE_INT, Color.YELLOW_GREEN)
+	graph_node.set_slot(1, true, TYPE_INT, Color.BURLYWOOD, true, TYPE_INT, Color.YELLOW_GREEN)
+	graph_node2.set_slot(0, true, TYPE_INT, Color.YELLOW, true, TYPE_INT, Color.CORAL)
+	graph_node2.set_slot(1, true, TYPE_INT, Color.YELLOW, true, TYPE_INT, Color.CORAL)
 
 
 func _on_button_pressed():
 #	add.test_slot()
-	print(add.is_processing())
-	
+	graph_node.test_slot()
 #	test.test_slot()
 #	graph_node.test_slot()
 #	graph_node2.test_slot()
-	pass
+#	pass
 
 
 func _on_connection_request(from_node, from_port, to_node, to_port):
