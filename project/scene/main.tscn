@@ -25,13 +25,13 @@ metadata/_edit_lock_ = true
 
 [node name="Test" type="GraphNodeExtension" parent="MyGraphEdit"]
 layout_mode = 0
-offset_left = 479.0
-offset_top = 169.0
-offset_right = 555.0
-offset_bottom = 361.0
+offset_left = 605.0
+offset_top = 136.0
+offset_right = 681.0
+offset_bottom = 328.0
 mouse_filter = 1
 title = "Test"
-position_offset = Vector2(479, 169)
+position_offset = Vector2(605, 136)
 slot/0/left_enabled = false
 slot/0/left_type = 0
 slot/0/left_color = Color(1, 1, 1, 1)
@@ -175,12 +175,12 @@ text = "123"
 [node name="Add" parent="MyGraphEdit" instance=ExtResource("2_g1lbn")]
 mode = 1
 layout_mode = 0
-offset_left = 639.0
-offset_top = 194.0
-offset_right = 742.0
-offset_bottom = 312.0
+offset_left = 333.0
+offset_top = 208.0
+offset_right = 436.0
+offset_bottom = 326.0
 mouse_filter = 1
-position_offset = Vector2(639, 194)
+position_offset = Vector2(333, 208)
 
 [node name="Button" type="Button" parent="."]
 layout_mode = 0

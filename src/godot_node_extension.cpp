@@ -32,7 +32,10 @@ Port::~Port() {
 }
 
 void Port::set_value(Variant p_value) {
-	value = std::move(p_value);
+	if (p_value != value) {
+		value_changed = true;
+		value = std::move(p_value);
+	}
 }
 
 Variant Port::get_value() const {
@@ -66,7 +69,6 @@ void GraphEditExtension::_bind_methods() {
 
 Error GraphEditExtension::connect_node(const StringName& from_node, int from_port, const StringName& to_node, int to_port) {
 	Error error = GraphEdit::connect_node(from_node, from_port, to_node, to_port);
-
 	if ( error != OK ) {
 		return error;
 	}
@@ -74,7 +76,6 @@ Error GraphEditExtension::connect_node(const StringName& from_node, int from_por
 	// TODO 在这里处理连接
 	GraphNodeExtension* output_node = get_node<GraphNodeExtension>(NodePath(from_node));
 	GraphNodeExtension* input_node = get_node<GraphNodeExtension>(NodePath(to_node));
-
 	Dictionary input_ports_connected(output_node->get_input_ports_connected_with_output_port());
 	if (!input_ports_connected[from_port]) {
 		input_ports_connected[from_port] = Dictionary();
@@ -106,9 +107,10 @@ void GraphEditExtension::disconnect_node(const StringName& from_node, int from_p
 	Dictionary input_ports_connected(output_node->get_input_ports_connected_with_output_port());
 	Dictionary input_nodes_connected(input_ports_connected[from_port]);
 	Array input_ports_connected_on_input_node(input_nodes_connected[to_node]);
-	int index_input_port = input_node->get_connection_input_slot(to_port);
+	int index_slot = input_node->get_connection_input_slot(to_port);
 
-	input_ports_connected_on_input_node.erase(index_input_port);
+	input_node->get_input_port(index_slot)->set_value(nullptr);
+	input_ports_connected_on_input_node.erase(index_slot);
 	if (input_ports_connected_on_input_node.is_empty()) {
 		input_nodes_connected.erase(to_node);
 	}
@@ -170,7 +172,8 @@ void GraphNodeExtension::_notification(int p_what) {
 		UtilityFunctions::print(get_name(), "ready");
 		break;
 	case NOTIFICATION_PROCESS:
-		what_should_i_do();
+		what_to_do();
+		when_value_changed();
 		break;
 	case NOTIFICATION_DRAG_BEGIN:
 		UtilityFunctions::print("drag begin");
@@ -370,7 +373,7 @@ void GraphNodeExtension::data_display() {
 	}
 }
 
-void GraphNodeExtension::what_should_i_do() {
+void GraphNodeExtension::what_to_do() {
 	switch ( mode ) {
 	case DATA_SOURCE:
 		data_source();
@@ -384,6 +387,20 @@ void GraphNodeExtension::what_should_i_do() {
 	}
 }
 
+void GraphNodeExtension::when_value_changed() {
+	int64_t count_output_port = get_connection_output_count();
+
+	for ( int index_output_port = 0; index_output_port < count_output_port; index_output_port++) {
+		int index_slot = get_connection_output_slot(index_output_port);
+		Port* output_port = get_output_port(index_slot);
+
+		if (output_port->is_value_changed()) {
+			send_value(index_output_port);
+			output_port->set_value_changed(false);
+		}
+	}
+}
+
 // test
 void GraphNodeExtension::test_slot() {
 //	UtilityFunctions::print("input_ports_size", input_ports.size());
@@ -391,7 +408,8 @@ void GraphNodeExtension::test_slot() {
 //	UtilityFunctions::print("output_ports_size", output_ports.size());
 //	UtilityFunctions::print("output_ports:  ", output_ports);
 //	send_value(0);
-	UtilityFunctions::print(input_ports);
+//	UtilityFunctions::print(input_ports);
+	when_value_changed();
 }
 
 
