@@ -82,10 +82,12 @@ public:
 	Mode get_mode() const;
 
 	// other
-	Port* get_input_port(int slot_index) const;
-	Port* get_output_port(int slot_index) const;
-	void add_input_port(int slot_index, bool enable);
-	void add_output_port(int slot_index, bool enable);
+	Port* get_input_port(int index_slot) const;
+	Port* get_output_port(int index_slot) const;
+	Variant get_value_input_port(int index_input_port);
+	void set_value_output_port(int index_output_port, Variant p_value);
+	void add_input_port(int index_slot, bool enable);
+	void add_output_port(int index_slot, bool enable);
 	void data_source();
 
 	template<typename T>
@@ -103,8 +105,6 @@ public:
 	void data_display();
 	void what_to_do();
 	void when_value_changed();
-
-
 
 
 	//test

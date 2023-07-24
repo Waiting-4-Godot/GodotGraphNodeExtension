@@ -7,6 +7,7 @@
 
 #include <godot_cpp/variant/utility_functions.hpp>
 #include <godot_cpp/classes/label.hpp>
+#include <utility>
 //#include <utility>
 
 
@@ -91,7 +92,7 @@ Error GraphEditExtension::connect_node(const StringName& from_node, int from_por
 		input_ports_connected_on_input_node.push_back(input_node->get_connection_input_slot(to_port));
 	}
 	input_ports_connected_on_input_node.sort();
-//	UtilityFunctions::print(input_ports_connected);
+	UtilityFunctions::print(input_ports_connected);
 
 	output_node->send_value(from_port);
 
@@ -109,7 +110,7 @@ void GraphEditExtension::disconnect_node(const StringName& from_node, int from_p
 	Array input_ports_connected_on_input_node(input_nodes_connected[to_node]);
 	int index_slot = input_node->get_connection_input_slot(to_port);
 
-	input_node->get_input_port(index_slot)->set_value(nullptr);
+	input_node->get_input_port(index_slot)->set_value(0);
 	input_ports_connected_on_input_node.erase(index_slot);
 	if (input_ports_connected_on_input_node.is_empty()) {
 		input_nodes_connected.erase(to_node);
@@ -149,6 +150,14 @@ void GraphNodeExtension::_bind_methods() {
 	ClassDB::bind_method(D_METHOD("get_mode"), &GraphNodeExtension::get_mode);
 
 	// other
+	ClassDB::bind_method(
+			D_METHOD("get_value_input_port", "index_input_port"),
+			&GraphNodeExtension::get_value_input_port
+	);
+	ClassDB::bind_method(
+			D_METHOD("set_value_output_port", "index_output_port", "value"),
+			&GraphNodeExtension::set_value_output_port
+	);
 
 	// test
 	ClassDB::bind_method(D_METHOD("test_slot"), &GraphNodeExtension::test_slot);
@@ -254,20 +263,30 @@ GraphNodeExtension::Mode GraphNodeExtension::get_mode() const {
 }
 
 // other
-Port* GraphNodeExtension::get_input_port(int slot_index) const {
-	return Object::cast_to<Port>(input_ports[slot_index]);
+Port* GraphNodeExtension::get_input_port(int index_slot) const {
+	return Object::cast_to<Port>(input_ports[index_slot]);
 }
 
-Port* GraphNodeExtension::get_output_port(int slot_index) const {
-	return Object::cast_to<Port>(output_ports[slot_index]);
+Port* GraphNodeExtension::get_output_port(int index_slot) const {
+	return Object::cast_to<Port>(output_ports[index_slot]);
 }
 
-void GraphNodeExtension::add_input_port(int slot_index, bool enable) {
-	Port* input_port = get_input_port(slot_index);
+Variant GraphNodeExtension::get_value_input_port(int index_input_port) {
+	Port* input_port = get_input_port(get_connection_input_slot(index_input_port));
+	return input_port->get_value();
+}
+
+void GraphNodeExtension::set_value_output_port(int index_output_port, Variant p_value) {
+	Port* output_port = get_output_port(get_connection_output_slot(index_output_port));
+	output_port->set_value(p_value);
+}
+
+void GraphNodeExtension::add_input_port(int index_slot, bool enable) {
+	Port* input_port = get_input_port(index_slot);
 
 	if (enable) {
 		if (input_port == nullptr) {
-			input_ports[slot_index] = memnew(Port);
+			input_ports[index_slot] = memnew(Port);
 		}
 	} else {
 		if (input_port != nullptr) {
@@ -276,12 +295,12 @@ void GraphNodeExtension::add_input_port(int slot_index, bool enable) {
 	}
 }
 
-void GraphNodeExtension::add_output_port(int slot_index, bool enable) {
-	Port* output_port = get_output_port(slot_index);
+void GraphNodeExtension::add_output_port(int index_slot, bool enable) {
+	Port* output_port = get_output_port(index_slot);
 
 	if (enable) {
 		if (output_port == nullptr) {
-			output_ports[slot_index] = memnew(Port);
+			output_ports[index_slot] = memnew(Port);
 		}
 	} else {
 		if (output_port != nullptr) {
@@ -354,7 +373,7 @@ void GraphNodeExtension::send_value(int index_output_port) {
 			int slot_index = input_ports_on_this_node[index_input_port];
 			UtilityFunctions::print(node->get_name(), "  slot_index:  ", slot_index);
 			node->get_input_port((slot_index))->set_value(value);
-			UtilityFunctions::print(node->get_input_port(slot_index)->get_value());
+//			UtilityFunctions::print(node->get_input_port(slot_index)->get_value());
 		}
 	}
 }

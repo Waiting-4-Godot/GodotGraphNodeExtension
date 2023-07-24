@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://dddr7n1pj4yym"]
+[gd_scene load_steps=4 format=3 uid="uid://dddr7n1pj4yym"]
 
 [ext_resource type="Script" path="res://script/main_graph_edit.gd" id="1_ens6f"]
 [ext_resource type="PackedScene" uid="uid://cc13mcx3yo18c" path="res://scene/add.tscn" id="2_g1lbn"]
+[ext_resource type="PackedScene" uid="uid://bri31d4kii7go" path="res://scene/sub.tscn" id="3_e8ks8"]
 
 [node name="Control" type="Control"]
 layout_mode = 3
@@ -25,13 +26,13 @@ metadata/_edit_lock_ = true
 
 [node name="Test" type="GraphNodeExtension" parent="MyGraphEdit"]
 layout_mode = 0
-offset_left = 605.0
-offset_top = 136.0
-offset_right = 681.0
-offset_bottom = 328.0
+offset_left = 169.0
+offset_top = 160.0
+offset_right = 272.0
+offset_bottom = 362.0
 mouse_filter = 1
 title = "Test"
-position_offset = Vector2(605, 136)
+position_offset = Vector2(169, 160)
 slot/0/left_enabled = false
 slot/0/left_type = 0
 slot/0/left_color = Color(1, 1, 1, 1)
@@ -78,11 +79,11 @@ slot/4/right_color = Color(1, 1, 1, 1)
 slot/4/right_icon = null
 slot/4/draw_stylebox = true
 
-[node name="Label" type="Label" parent="MyGraphEdit/Test"]
+[node name="LineEdit" type="LineEdit" parent="MyGraphEdit/Test"]
 layout_mode = 2
-text = "0"
+text = "10"
 
-[node name="Label2" type="Label" parent="MyGraphEdit/Test"]
+[node name="LineEdit2" type="LineEdit" parent="MyGraphEdit/Test"]
 layout_mode = 2
 text = "1"
 
@@ -173,14 +174,31 @@ layout_mode = 2
 text = "123"
 
 [node name="Add" parent="MyGraphEdit" instance=ExtResource("2_g1lbn")]
-mode = 1
 layout_mode = 0
-offset_left = 333.0
-offset_top = 208.0
-offset_right = 436.0
-offset_bottom = 326.0
+offset_left = 499.0
+offset_top = 116.0
+offset_right = 566.0
+offset_bottom = 218.0
 mouse_filter = 1
-position_offset = Vector2(333, 208)
+position_offset = Vector2(499, 116)
+
+[node name="Add2" parent="MyGraphEdit" instance=ExtResource("2_g1lbn")]
+layout_mode = 0
+offset_left = 525.0
+offset_top = 311.0
+offset_right = 592.0
+offset_bottom = 413.0
+mouse_filter = 1
+position_offset = Vector2(525, 311)
+
+[node name="Sub" parent="MyGraphEdit" instance=ExtResource("3_e8ks8")]
+layout_mode = 0
+offset_left = 332.0
+offset_top = 303.0
+offset_right = 397.0
+offset_bottom = 405.0
+mouse_filter = 1
+position_offset = Vector2(332, 303)
 
 [node name="Button" type="Button" parent="."]
 layout_mode = 0
