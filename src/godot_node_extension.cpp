@@ -25,7 +25,7 @@ void Port::_bind_methods() {
 }
 
 Port::Port() {
-	UtilityFunctions::print("hello port");
+//	UtilityFunctions::print("hello port");
 }
 
 Port::~Port() {
@@ -92,7 +92,7 @@ Error GraphEditExtension::connect_node(const StringName& from_node, int from_por
 		input_ports_connected_on_input_node.push_back(input_node->get_connection_input_slot(to_port));
 	}
 	input_ports_connected_on_input_node.sort();
-	UtilityFunctions::print(input_ports_connected);
+//	UtilityFunctions::print(input_ports_connected);
 
 	output_node->send_value(from_port);
 

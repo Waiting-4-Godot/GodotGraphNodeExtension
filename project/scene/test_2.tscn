@@ -1,0 +1,270 @@
+[gd_scene load_steps=6 format=3 uid="uid://v3pl50ci525x"]
+
+[ext_resource type="Script" path="res://script/test_2.gd" id="1_q3e23"]
+[ext_resource type="PackedScene" uid="uid://b4f14fkniywu8" path="res://scene/74LS138.tscn" id="2_gngum"]
+[ext_resource type="PackedScene" uid="uid://blv6hn8che6h6" path="res://scene/not.tscn" id="3_v5se4"]
+[ext_resource type="PackedScene" uid="uid://dqjtsmupnvrae" path="res://scene/and.tscn" id="4_dwhfj"]
+[ext_resource type="PackedScene" uid="uid://dee1v7qcc2crc" path="res://scene/or.tscn" id="5_sykwn"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_lock_ = true
+
+[node name="GraphEditExtension" type="GraphEditExtension" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+right_disconnects = true
+script = ExtResource("1_q3e23")
+metadata/_edit_lock_ = true
+
+[node name="74LS138" parent="GraphEditExtension" instance=ExtResource("2_gngum")]
+layout_mode = 0
+offset_left = 452.0
+offset_top = 274.0
+offset_right = 560.0
+offset_bottom = 550.0
+mouse_filter = 1
+position_offset = Vector2(452, 274)
+
+[node name="Input" type="GraphNodeExtension" parent="GraphEditExtension"]
+layout_mode = 0
+offset_left = 205.0
+offset_top = 160.0
+offset_right = 309.0
+offset_bottom = 311.0
+mouse_filter = 1
+title = "Input"
+position_offset = Vector2(205, 160)
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+slot/1/left_enabled = false
+slot/1/left_type = 0
+slot/1/left_color = Color(1, 1, 1, 1)
+slot/1/left_icon = null
+slot/1/right_enabled = false
+slot/1/right_type = 0
+slot/1/right_color = Color(1, 1, 1, 1)
+slot/1/right_icon = null
+slot/1/draw_stylebox = true
+slot/2/left_enabled = false
+slot/2/left_type = 0
+slot/2/left_color = Color(1, 1, 1, 1)
+slot/2/left_icon = null
+slot/2/right_enabled = false
+slot/2/right_type = 0
+slot/2/right_color = Color(1, 1, 1, 1)
+slot/2/right_icon = null
+slot/2/draw_stylebox = true
+
+[node name="CheckButton" type="CheckButton" parent="GraphEditExtension/Input"]
+layout_mode = 2
+text = "A0"
+
+[node name="CheckButton2" type="CheckButton" parent="GraphEditExtension/Input"]
+layout_mode = 2
+text = "A1"
+
+[node name="CheckButton3" type="CheckButton" parent="GraphEditExtension/Input"]
+layout_mode = 2
+text = "A2"
+
+[node name="Enable" type="GraphNodeExtension" parent="GraphEditExtension"]
+layout_mode = 0
+offset_left = 205.0
+offset_top = 354.0
+offset_right = 325.0
+offset_bottom = 472.0
+mouse_filter = 1
+title = "Enable"
+position_offset = Vector2(205, 354)
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+slot/1/left_enabled = false
+slot/1/left_type = 0
+slot/1/left_color = Color(1, 1, 1, 1)
+slot/1/left_icon = null
+slot/1/right_enabled = false
+slot/1/right_type = 0
+slot/1/right_color = Color(1, 1, 1, 1)
+slot/1/right_icon = null
+slot/1/draw_stylebox = true
+
+[node name="CheckButton" type="CheckButton" parent="GraphEditExtension/Enable"]
+layout_mode = 2
+text = "VCC"
+
+[node name="CheckButton2" type="CheckButton" parent="GraphEditExtension/Enable"]
+layout_mode = 2
+text = "GND"
+
+[node name="Display" type="GraphNodeExtension" parent="GraphEditExtension"]
+mode = 2
+layout_mode = 0
+offset_left = 686.0
+offset_top = 201.0
+offset_right = 779.0
+offset_bottom = 453.0
+mouse_filter = 1
+title = "Display"
+position_offset = Vector2(686, 201)
+slot/0/left_enabled = false
+slot/0/left_type = 0
+slot/0/left_color = Color(1, 1, 1, 1)
+slot/0/left_icon = null
+slot/0/right_enabled = false
+slot/0/right_type = 0
+slot/0/right_color = Color(1, 1, 1, 1)
+slot/0/right_icon = null
+slot/0/draw_stylebox = true
+slot/1/left_enabled = false
+slot/1/left_type = 0
+slot/1/left_color = Color(1, 1, 1, 1)
+slot/1/left_icon = null
+slot/1/right_enabled = false
+slot/1/right_type = 0
+slot/1/right_color = Color(1, 1, 1, 1)
+slot/1/right_icon = null
+slot/1/draw_stylebox = true
+slot/2/left_enabled = false
+slot/2/left_type = 0
+slot/2/left_color = Color(1, 1, 1, 1)
+slot/2/left_icon = null
+slot/2/right_enabled = false
+slot/2/right_type = 0
+slot/2/right_color = Color(1, 1, 1, 1)
+slot/2/right_icon = null
+slot/2/draw_stylebox = true
+slot/3/left_enabled = false
+slot/3/left_type = 0
+slot/3/left_color = Color(1, 1, 1, 1)
+slot/3/left_icon = null
+slot/3/right_enabled = false
+slot/3/right_type = 0
+slot/3/right_color = Color(1, 1, 1, 1)
+slot/3/right_icon = null
+slot/3/draw_stylebox = true
+slot/4/left_enabled = false
+slot/4/left_type = 0
+slot/4/left_color = Color(1, 1, 1, 1)
+slot/4/left_icon = null
+slot/4/right_enabled = false
+slot/4/right_type = 0
+slot/4/right_color = Color(1, 1, 1, 1)
+slot/4/right_icon = null
+slot/4/draw_stylebox = true
+slot/5/left_enabled = false
+slot/5/left_type = 0
+slot/5/left_color = Color(1, 1, 1, 1)
+slot/5/left_icon = null
+slot/5/right_enabled = false
+slot/5/right_type = 0
+slot/5/right_color = Color(1, 1, 1, 1)
+slot/5/right_icon = null
+slot/5/draw_stylebox = true
+slot/6/left_enabled = false
+slot/6/left_type = 0
+slot/6/left_color = Color(1, 1, 1, 1)
+slot/6/left_icon = null
+slot/6/right_enabled = false
+slot/6/right_type = 0
+slot/6/right_color = Color(1, 1, 1, 1)
+slot/6/right_icon = null
+slot/6/draw_stylebox = true
+slot/7/left_enabled = false
+slot/7/left_type = 0
+slot/7/left_color = Color(1, 1, 1, 1)
+slot/7/left_icon = null
+slot/7/right_enabled = false
+slot/7/right_type = 0
+slot/7/right_color = Color(1, 1, 1, 1)
+slot/7/right_icon = null
+slot/7/draw_stylebox = true
+
+[node name="Label" type="Label" parent="GraphEditExtension/Display"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="GraphEditExtension/Display"]
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="GraphEditExtension/Display"]
+layout_mode = 2
+
+[node name="Label4" type="Label" parent="GraphEditExtension/Display"]
+layout_mode = 2
+
+[node name="Label5" type="Label" parent="GraphEditExtension/Display"]
+layout_mode = 2
+
+[node name="Label6" type="Label" parent="GraphEditExtension/Display"]
+layout_mode = 2
+
+[node name="Label7" type="Label" parent="GraphEditExtension/Display"]
+layout_mode = 2
+
+[node name="Label8" type="Label" parent="GraphEditExtension/Display"]
+layout_mode = 2
+
+[node name="NOT" parent="GraphEditExtension" instance=ExtResource("3_v5se4")]
+layout_mode = 0
+offset_left = 427.0
+offset_top = 61.0
+offset_right = 498.0
+offset_bottom = 138.0
+mouse_filter = 1
+position_offset = Vector2(427, 61)
+
+[node name="AND" parent="GraphEditExtension" instance=ExtResource("4_dwhfj")]
+layout_mode = 0
+offset_left = 534.0
+offset_top = 48.0
+offset_right = 605.0
+offset_bottom = 150.0
+mouse_filter = 1
+position_offset = Vector2(534, 48)
+
+[node name="OR" parent="GraphEditExtension" instance=ExtResource("5_sykwn")]
+layout_mode = 0
+offset_left = 729.0
+offset_top = 64.0
+offset_right = 788.0
+offset_bottom = 166.0
+mouse_filter = 1
+position_offset = Vector2(729, 64)
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 795.0
+offset_top = 463.0
+offset_right = 856.0
+offset_bottom = 494.0
+text = "button"
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="connection_request" from="GraphEditExtension" to="GraphEditExtension" method="_on_connection_request"]
+[connection signal="disconnection_request" from="GraphEditExtension" to="GraphEditExtension" method="_on_disconnection_request"]
+[connection signal="pressed" from="Button" to="GraphEditExtension" method="_on_button_pressed"]
+[connection signal="timeout" from="Timer" to="GraphEditExtension" method="_on_timer_timeout"]
