@@ -6,6 +6,8 @@ extends GraphEditExtension
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
+	add_valid_connection_type(TYPE_INT, TYPE_FLOAT)
+	add_valid_connection_type(TYPE_FLOAT, TYPE_INT)	
 	init_slot()
 
 
@@ -20,7 +22,7 @@ func init_slot() -> void:
 	test.set_slot(1, false, TYPE_INT, Color.ANTIQUE_WHITE, true, TYPE_INT, Color.AQUA)
 	test.set_slot(3)
 	test.set_slot(4)
-	graph_node.set_slot(0, false, TYPE_INT, Color.BURLYWOOD, false, TYPE_INT, Color.YELLOW_GREEN)
+	graph_node.set_slot(0, true, TYPE_INT, Color.BURLYWOOD, false, TYPE_INT, Color.YELLOW_GREEN)
 	graph_node.set_slot(1, true, TYPE_INT, Color.BURLYWOOD, true, TYPE_INT, Color.YELLOW_GREEN)
 	graph_node2.set_slot(0, true, TYPE_INT, Color.YELLOW, true, TYPE_INT, Color.CORAL)
 	graph_node2.set_slot(1, true, TYPE_INT, Color.YELLOW, true, TYPE_INT, Color.CORAL)

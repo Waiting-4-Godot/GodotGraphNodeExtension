@@ -6,16 +6,16 @@ extends GraphNodeExtension
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	set_slot(0, true, TYPE_INT, Color.CHARTREUSE, true, TYPE_INT, Color.CORAL)
-	set_slot(1, true, TYPE_INT, Color.CHARTREUSE, false)
+	set_slot(0, true, TYPE_INT, Color.PINK, true, TYPE_INT, Color.GREEN)
+	set_slot(1, true, TYPE_INT, Color.PINK, false)
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
-	sub()
+	multiply()
 
 
-func sub() -> void:
+func multiply() -> void:
 	var a = get_value_input_port(0)
 	var b = get_value_input_port(1)
 	if a != null:
@@ -23,4 +23,4 @@ func sub() -> void:
 	if b != null:
 		label2.text = str(b)
 	if a != null and b != null:
-		set_value_output_port(0, a - b)
+		set_value_output_port(0, a * b)

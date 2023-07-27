@@ -184,8 +184,6 @@ void GraphNodeExtension::_notification(int p_what) {
 		what_to_do();
 		when_value_changed();
 		break;
-	case NOTIFICATION_DRAG_BEGIN:
-		UtilityFunctions::print("drag begin");
 	default:
 		break;
 	}

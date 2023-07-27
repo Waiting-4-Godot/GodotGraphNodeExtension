@@ -7,8 +7,8 @@ extends GraphNodeExtension
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	print("ready?")
-	set_slot(0);
-	set_slot(1, true, TYPE_INT, Color.ANTIQUE_WHITE, false, TYPE_INT, Color.AQUA);
+	set_slot(0, true, TYPE_INT, Color.VIOLET, true, TYPE_INT, Color.SKY_BLUE);
+	set_slot(1, true, TYPE_INT, Color.VIOLET, false);
 	print("readied!")
 	pass
 

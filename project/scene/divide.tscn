@@ -1,12 +1,12 @@
-[gd_scene load_steps=2 format=3 uid="uid://cc13mcx3yo18c"]
+[gd_scene load_steps=2 format=3 uid="uid://crmnp22hndj2j"]
 
-[ext_resource type="Script" path="res://script/add.gd" id="1_0llog"]
+[ext_resource type="Script" path="res://script/divide.gd" id="1_q4bwu"]
 
-[node name="Add" type="GraphNodeExtension"]
+[node name="Divide" type="GraphNodeExtension"]
 mode = 1
-offset_right = 67.0
-offset_bottom = 102.0
-title = "Add"
+offset_right = 36.0
+offset_bottom = 54.0
+title = "Div"
 slot/0/left_enabled = false
 slot/0/left_type = 0
 slot/0/left_color = Color(1, 1, 1, 1)
@@ -25,7 +25,7 @@ slot/1/right_type = 0
 slot/1/right_color = Color(1, 1, 1, 1)
 slot/1/right_icon = null
 slot/1/draw_stylebox = true
-script = ExtResource("1_0llog")
+script = ExtResource("1_q4bwu")
 
 [node name="Label" type="Label" parent="."]
 layout_mode = 2
